@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC
+  "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+  <appender name="console" class="org.apache.log4j.ConsoleAppender">
+    <param name="Target" value="System.out"/>
+    <param name="Threshold" value="WARN"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+    </layout>
+  </appender>
+    <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="hibernate.log"/>
+    <param name="Threshold" value="INFO"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+    </layout>
+  </appender>
+  <appender name="fileZabbix" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="hibernateZabbix.log"/>
+    <param name="Threshold" value="INFO"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+    </layout>
+  </appender>
+  <appender name="zabbix" class="lv.bank.util.zabbix.ZabbixAppender">
+    <param name="port" value="10051"/>
+    <param name="host" value="zabbix.dnb.lv"/>
+    <param name="agent" value="linker-dev-lv"/>
+    <param name="key" value="SyncLinkAppDB"/>
+    <param name="maxSize" value="1024"/>
+    <param name="Threshold" value="WARN"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+    </layout>
+  </appender>
+  <appender name="zabbix2" class="lv.bank.util.zabbix.ZabbixAppender">
+    <param name="port" value="10051"/>
+    <param name="host" value="zabbix.dnb.lv"/>
+    <param name="agent" value="linker-dev-lv"/>
+    <param name="key" value="SyncLinkAppDB"/>
+    <param name="maxSize" value="1024"/>
+    <param name="Threshold" value="INFO"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%m%n"/>
+    </layout>
+    <filter class="org.apache.log4j.varia.StringMatchFilter">
+        <param name="StringToMatch" value="OK" />
+        <param name="AcceptOnMatch" value="true"/>
+    </filter>
+    <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+  </appender>
+  <appender name="zabbixAcc" class="lv.bank.util.zabbix.ZabbixAppender">
+    <param name="port" value="10051"/>
+    <param name="host" value="zabbix.dnb.lv"/>
+    <param name="agent" value="linker-dev-lv"/>
+    <param name="key" value="accumulator-types"/>
+    <param name="maxSize" value="1024"/>
+    <param name="Threshold" value="INFO"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%m%n"/>
+    </layout>
+  </appender>
+  <appender name="zabbixMan" class="lv.bank.util.zabbix.ZabbixAppender">
+    <param name="port" value="10051"/>
+    <param name="host" value="zabbix.dnb.lv"/>
+    <param name="agent" value="linker-dev-lv"/>
+    <param name="key" value="mandatory-accumulator"/>
+    <param name="maxSize" value="1024"/>
+    <param name="Threshold" value="INFO"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%m%n"/>
+    </layout>
+  </appender>
+  <appender name="async" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="500"/>
+        <appender-ref ref="zabbix"/>
+        <appender-ref ref="zabbix2"/>
+  </appender>
+  <appender name="asyncAcc" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="500"/>
+        <appender-ref ref="zabbixAcc"/>
+        <appender-ref ref="fileZabbix"/>
+  </appender>
+  <appender name="asyncMan" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="500"/>
+        <appender-ref ref="zabbixMan"/>
+        <appender-ref ref="fileZabbix"/>
+  </appender>
+  <logger name="org.hibernate">
+        <level value="WARN"/>
+  </logger>
+  <logger name="org.hibernate.orm.deprecation">
+    <level value="ERROR"/>
+  </logger>
+  <logger name="org.springframework.context.annotation.ConfigurationClassParser">
+    <level value="ERROR"/>
+  </logger>
+  <logger name="com.zaxxer.hikari.HikariDataSource">
+    <level value="ERROR"/>
+  </logger>
+  <logger name="accumulator-types">
+    <level value="INFO"/>
+    <appender-ref ref="asyncAcc"/>
+  </logger>
+  <logger name="mandatory-accumulator">
+    <level value="INFO"/>
+    <appender-ref ref="asyncMan"/>
+  </logger>
+  <root>
+    <priority value ="info" />
+    <appender-ref ref="console" />
+    <appender-ref ref="async" />
+    <appender-ref ref="file" />
+  </root>
+
+</log4j:configuration>

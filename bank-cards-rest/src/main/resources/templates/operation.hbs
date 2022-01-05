@@ -1,0 +1,64 @@
+{{#deprecated}}-deprecated-{{/deprecated}}
+<p><a id="{{operationId}}">{{summary}}</a></p>
+
+<p>{{description}}</p>
+
+{{#if externalDocs.url}}{{externalDocs.description}}. [See external documents for more details]({{externalDocs.url}})
+{{/if}}
+
+{{#if security}}
+<h4>Security</h4>
+{{/if}}
+
+{{#security}}
+{{#each this}}
+* {{@key}}
+{{#this}}   * {{this}}
+{{/this}}
+{{/each}}
+{{/security}}
+
+<h4>Request</h4>
+{{#if consumes}}<p><strong>Content-Type:</strong> {{join consumes ", "}}</p>{{/if}}
+
+<h5>Parameters</h5>
+{{#if parameters}}
+<table border="1">
+<tbody>
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>{{/if}}{{#parameters}}
+<tr>
+    <th>{{name}}</th>
+    <td>{{in}}</td>
+    <td>{{#if required}}yes{{else}}no{{/if}}</td>
+    <td>{{description}}{{#if pattern}} (<strong>Pattern</strong>: `{{pattern}}`){{/if}}</td>
+    <td> - </td>{{#ifeq in "body"}}
+    <td> {{#ifeq schema.type "array"}}Array[<a href="{{schema.items.$ref}}">{{basename schema.items.$ref}}</a>]{{/ifeq}}{{#schema.$ref}}<a href="{{schema.$ref}}">{{basename schema.$ref}}</a> {{/schema.$ref}}
+    </td>{{else}}{{#ifeq type "array"}}<td>Array[{{items.type}}] ({{collectionFormat}})</td>{{else}}<td>{{type}} {{#format}}({{format}}){{/format}}</td>{{/ifeq}}{{/ifeq}}
+</tr>{{/parameters}}{{#if parameters}}
+</tbody>
+</table>
+{{/if}}
+
+
+<h4>Response</h4>
+<p>{{#if produces}}<strong>Content-Type:</strong> {{join produces ", "}}{{/if}}</p>
+<table border="1">
+<tbody>
+    <tr>
+        <th>Status Code</th>
+        <th>Reason</th>
+        <th>Response Model</th>
+    </tr>{{#each responses}}<tr>
+	    <th>{{@key}} </th>
+	    <td>{{description}}</td>
+	    <td>{{#schema.$ref}}<a href="{{schema.$ref}}">{{basename schema.$ref}}</a>{{/schema.$ref}}{{#ifeq schema.type "array"}}Array[<a href="{{schema.items.$ref}}">{{basename schema.items.$ref}}</a>]{{/ifeq}}{{^schema}} - {{/schema}}</td>
+	</tr>{{/each}}
+</tbody>
+</table>

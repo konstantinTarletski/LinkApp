@@ -1,0 +1,22 @@
+<jaxb:bindings version="2.1"
+               xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
+
+    <jaxb:globalBindings generateElementProperty="false">
+        <!-- use Calendar Date instead of XMLGregorianCalendar -->
+        <jaxb:javaType name="java.util.Date" xmlType="xs:dateTime"
+                       parseMethod="lv.bank.cards.core.utils.DataTypeAdapter.parseDateTime"
+                       printMethod="lv.bank.cards.core.utils.DataTypeAdapter.printDateTime"/>
+
+        <jaxb:javaType name="java.util.Date" xmlType="xs:date"
+                       parseMethod="lv.bank.cards.core.utils.DataTypeAdapter.parseDate"
+                       printMethod="lv.bank.cards.core.utils.DataTypeAdapter.printDate"/>
+
+        <jaxb:javaType name="java.util.Date" xmlType="xs:time"
+                       parseMethod="lv.bank.cards.core.utils.DataTypeAdapter.parseTime"
+                       printMethod="lv.bank.cards.core.utils.DataTypeAdapter.printTime"/>
+
+    </jaxb:globalBindings>
+
+</jaxb:bindings>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/bank-cards" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bank-cards-commons" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bank-cards-core" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bank-cards-ear" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bank-cards-link" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bank-cards-pos-iso-auth" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bank-cards-rest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bank-cards-soap" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/db-synchronizer" vcs="Git" />
+  </component>
+</project>

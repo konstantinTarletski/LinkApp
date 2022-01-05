@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="ear" name="bankCardsEAR:ear">
+    <output-path>$PROJECT_DIR$/bank-cards-ear/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>false</exploded>
+        <module>bankCardsEAR</module>
+        <packaging>ear</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
+      </options>
+    </properties>
+    <root id="archive" name="bankCardsEAR-2.8.1-SNAPSHOT.ear">
+      <element id="artifact" artifact-name="bankCardsEAR:ear exploded" />
+    </root>
+  </artifact>
+</component>

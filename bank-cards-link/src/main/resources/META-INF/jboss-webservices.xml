@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webservices
+		xmlns="http://www.jboss.com/xml/ns/javaee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		version="1.0"
+		xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss_webservices_1_0.xsd">
+
+	<context-root>BankCardsLink</context-root>
+
+	<port-component>
+		<ejb-name>LinkMasterLT</ejb-name>
+		<port-component-name>BankCardsLinkWSWrapperPort</port-component-name>
+		<port-component-uri>/BankCardsLinkWSWrapperPort</port-component-uri>
+	</port-component>
+
+	<port-component>
+		<ejb-name>LinkMaster</ejb-name>
+		<port-component-name>LinkMasterBeanPort</port-component-name>
+		<port-component-uri>/LinkMasterBeanPort</port-component-uri>
+	</port-component>
+
+</webservices>

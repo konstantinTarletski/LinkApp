@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://util.rtcu.cards.bank.lv/" name="BankCardsWSWrapperService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:tns="http://util.rtcu.cards.bank.lv/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types/>
+  <message name="RTCUNGCall">
+    <part name="arg0" type="xsd:string"/>
+  </message>
+  <message name="RTCUNGCallResponse">
+    <part name="return" type="xsd:string"/>
+  </message>
+  <message name="QueryCall">
+    <part name="arg0" type="xsd:string"/>
+  </message>
+  <message name="QueryCallResponse">
+    <part name="return" type="xsd:string"/>
+  </message>
+  <portType name="BankCardsWSWrapperDelegate">
+    <operation name="RTCUNGCall">
+      <input message="tns:RTCUNGCall"/>
+      <output message="tns:RTCUNGCallResponse"/>
+    </operation>
+    <operation name="QueryCall">
+      <input message="tns:QueryCall"/>
+      <output message="tns:QueryCallResponse"/>
+    </operation>
+  </portType>
+  <binding name="BankCardsWSWrapperPortBinding" type="tns:BankCardsWSWrapperDelegate">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="RTCUNGCall">
+      <soap:operation soapAction="http://util.rtcu.cards.bank.lv/RTCUNGCall"/>
+      <input>
+        <soap:body namespace="http://util.rtcu.cards.bank.lv/" use="literal"/>
+      </input>
+      <output>
+        <soap:body namespace="http://util.rtcu.cards.bank.lv/" use="literal"/>
+      </output>
+    </operation>
+    <operation name="QueryCall">
+      <soap:operation soapAction="http://util.rtcu.cards.bank.lv/QueryCall"/>
+      <input>
+        <soap:body namespace="http://util.rtcu.cards.bank.lv/" use="literal"/>
+      </input>
+      <output>
+        <soap:body namespace="http://util.rtcu.cards.bank.lv/" use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="BankCardsWSWrapperService">
+    <port binding="tns:BankCardsWSWrapperPortBinding" name="BankCardsWSWrapperPort">
+		<soap:address location="http://localhost:8080/BankCardsWS/BankCardsWSWrapperPort"/>
+	</port>
+  </service>
+</definitions>

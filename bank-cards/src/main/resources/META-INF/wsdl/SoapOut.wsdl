@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!-- $HeadURL$ $Id$ -->
+<definitions name="SoapOut" targetNamespace="urn:SoapOut"
+  xmlns:typens="urn:SoapOut"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!--
+    Types
+  -->
+
+  <types>
+    <xsd:schema targetNamespace="urn:SoapOut"
+        xmlns="http://www.w3.org/2001/XMLSchema">
+
+       <xsd:complexType name="Field">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:choice>
+            <xsd:element name="value" type="xsd:string"/>
+            <xsd:element name="fields" type="typens:Fields"/>
+          </xsd:choice>
+          <xsd:any minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Fields">
+        <xsd:sequence>
+          <xsd:element name="item" type="typens:Field" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="notify">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="fields" type="typens:Fields"/>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="notifyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <!--
+    Messages
+  -->
+
+  <message name="notifyIn">
+    <part name="body" element="typens:notify"/>
+  </message>
+  <message name="notifyOut">
+    <part name="body" element="typens:notifyResponse"/>
+  </message>
+
+  <!--
+    Port
+  -->
+
+  <portType name="SoapOutPort">
+    <operation name="notify">
+      <input message="typens:notifyIn"/>
+      <output message="typens:notifyOut"/>
+    </operation>
+  </portType>
+
+  <!--
+    Binding
+  -->
+
+  <binding name="SoapOutBinding" type="typens:SoapOutPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="notify">
+      <soap:operation soapAction="urn:SoapOut"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <!--
+    Dummy endpoint
+  -->
+
+  <service name="SoapOut">
+    <port name="SoapOutPort" binding="typens:SoapOutBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </port>
+  </service>
+</definitions>
+<!-- vim:set ts=2 sts=2 sw=2 sta et ai vb nowrap: -->

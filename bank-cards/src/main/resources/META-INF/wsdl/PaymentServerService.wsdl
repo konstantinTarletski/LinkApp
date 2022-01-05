@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:typens="urn:PaymentServer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PaymentServer" targetNamespace="urn:PaymentServer">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:PaymentServer">
+
+      <xsd:element name="PaymentServerException">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="provider" type="xsd:string"/>
+            <xsd:element name="error" type="xsd:string"/>
+            <xsd:element name="description" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="screen" type="xsd:string"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+        <!-- session/payment details -->
+        <xsd:complexType name="Detail">
+          <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="value" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="DetailArray">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="item" type="typens:Detail"/>
+          </xsd:sequence>
+        </xsd:complexType>
+
+        <!-- details to be entered -->
+        <xsd:complexType name="NeedDetail">
+          <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="screen" type="xsd:string"/>
+            <xsd:element name="inputType" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="NeedDetailArray">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="item" type="typens:NeedDetail"/>
+          </xsd:sequence>
+        </xsd:complexType>
+
+        <!-- supported payment instruments for given payment -->
+        <xsd:complexType name="PaymentInstrument">
+          <xsd:sequence>
+            <xsd:element name="label" type="xsd:string"/>
+            <xsd:element name="reference" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="PaymentInstrumentArray">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="item" type="typens:PaymentInstrument"/>
+          </xsd:sequence>
+        </xsd:complexType>
+
+        <!-- list of possible payments -->
+        <xsd:complexType name="LabelArray">
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="canGoUp" type="xsd:boolean"/>
+            <xsd:element minOccurs="0" name="screen" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+
+        <!-- -->
+        <xsd:complexType name="ConfirmationParameters">
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="screen" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="receipt" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="isReceiptOptional" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+
+        <!-- optional parameters -->
+        <xsd:complexType name="OptionalInt">
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="value" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="OptionalBoolean">
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="value" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+
+      <!-- switching -->
+        <xsd:complexType name="SwitchingItem">
+          <xsd:sequence>
+            <xsd:element name="objectID" type="xsd:int"/>
+            <xsd:element name="isFolder" type="xsd:boolean"/>
+            <xsd:element name="label" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="SwitchingList">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="item" type="typens:SwitchingItem"/>
+          </xsd:sequence>
+        </xsd:complexType>
+
+      <xsd:element name="Request">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="sessionID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="language" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="switchingID" type="typens:OptionalInt"/>
+            <xsd:element minOccurs="0" name="billerRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="payinstrRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="confirmed" type="typens:OptionalBoolean"/>
+            <xsd:element minOccurs="0" name="finished" type="typens:OptionalBoolean"/>
+            <xsd:element minOccurs="0" name="pinBlock" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="pinFormat" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="approved" type="xsd:boolean"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="RequestResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="sessionID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="needDetails" type="typens:NeedDetailArray"/>
+            <xsd:element minOccurs="0" name="labels" type="typens:LabelArray"/>
+            <xsd:element minOccurs="0" name="paymentInstruments" type="typens:PaymentInstrumentArray"/>
+            <xsd:element minOccurs="0" name="confirmation" type="typens:ConfirmationParameters"/>
+            <xsd:element name="action" type="xsd:int"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="Payment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="billerRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="payinstrRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="confirmed" type="xsd:boolean"/>
+            <xsd:element minOccurs="0" name="finished" type="xsd:boolean"/>
+            <xsd:element minOccurs="0" name="approved" type="xsd:boolean"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="PaymentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="needDetails" type="typens:NeedDetailArray"/>
+            <xsd:element minOccurs="0" name="confirmation" type="typens:ConfirmationParameters"/>
+            <xsd:element name="action" type="xsd:int"/>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="AutoPayment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="billerRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="payinstrRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="clientID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="confirmed" type="xsd:boolean"/>
+            <xsd:element minOccurs="0" name="finished" type="xsd:boolean"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AutoPaymentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element name="action" type="xsd:int"/>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+   
+      <xsd:element name="CancelRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="sessionID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="billerRef" type="xsd:string"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CancelRequestResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="ReturnPayment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ReturnPaymentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+  
+      <xsd:simpleType name="PaymentStatus">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="active"/>
+          <xsd:enumeration value="returned"/>
+          <xsd:enumeration value="finished"/>
+          <xsd:enumeration value="cancelled"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="GetPayment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetPaymentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element name="status" type="typens:PaymentStatus"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetClientID">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetClientIDResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="clientID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="needDetails" type="typens:NeedDetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetList">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="clientID" type="xsd:string"/>
+            <xsd:element name="language" type="xsd:string"/>
+            <xsd:element name="objectID" type="xsd:int"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetListResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="parentID" type="typens:OptionalInt"/>
+            <xsd:element minOccurs="0" name="list" type="typens:SwitchingList"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="needDetails" type="typens:NeedDetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="Get">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="clientID" type="xsd:string"/>
+            <xsd:element name="objectID" type="xsd:int"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="billerRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="payinstrRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="needDetails" type="typens:NeedDetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="Block">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="BlockResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:element minOccurs="0" name="needDetails" type="typens:NeedDetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="Unblock">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UnblockResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="Return">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ReturnResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="WriteOff">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="paymentID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="paymentRef" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="details" type="typens:DetailArray"/>
+            <xsd:any minOccurs="0" namespace="urn:PaymentServer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="WriteOffResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+  </types>
+  <message name="AutoPayment">
+    <part element="typens:AutoPayment" name="body"/>
+  </message>
+  <message name="BlockRequest">
+    <part element="typens:Block" name="body"/>
+  </message>
+  <message name="UnblockRequest">
+    <part element="typens:Unblock" name="body"/>
+  </message>
+  <message name="GetListResponse">
+    <part element="typens:GetListResponse" name="body"/>
+  </message>
+  <message name="ReturnResponse">
+    <part element="typens:ReturnResponse" name="body"/>
+  </message>
+  <message name="GetClientIDResponse">
+    <part element="typens:GetClientIDResponse" name="body"/>
+  </message>
+  <message name="CancelRequest">
+    <part element="typens:CancelRequest" name="body"/>
+  </message>
+  <message name="ReturnPayment">
+    <part element="typens:ReturnPayment" name="body"/>
+  </message>
+  <message name="WriteOffRequest">
+    <part element="typens:WriteOff" name="body"/>
+  </message>
+  <message name="WriteOffResponse">
+    <part element="typens:WriteOffResponse" name="body"/>
+  </message>
+  <message name="Request">
+    <part element="typens:Request" name="body"/>
+  </message>
+  <message name="GetClientIDRequest">
+    <part element="typens:GetClientID" name="body"/>
+  </message>
+  <message name="GetResponse">
+    <part element="typens:GetResponse" name="body"/>
+  </message>
+  <message name="AutoPaymentResponse">
+    <part element="typens:AutoPaymentResponse" name="body"/>
+  </message>
+  <message name="GetRequest">
+    <part element="typens:Get" name="body"/>
+  </message>
+  <message name="Payment">
+    <part element="typens:Payment" name="body"/>
+  </message>
+  <message name="CancelRequestResponse">
+    <part element="typens:CancelRequestResponse" name="body"/>
+  </message>
+  <message name="BlockResponse">
+    <part element="typens:BlockResponse" name="body"/>
+  </message>
+  <message name="ReturnPaymentResponse">
+    <part element="typens:ReturnPaymentResponse" name="body"/>
+  </message>
+  <message name="PaymentResponse">
+    <part element="typens:PaymentResponse" name="body"/>
+  </message>
+  <message name="PaymentServerFault">
+    <part element="typens:PaymentServerException" name="fault"/>
+  </message>
+  <message name="GetPaymentOut">
+    <part element="typens:GetPaymentResponse" name="body"/>
+  </message>
+  <message name="GetPaymentIn">
+    <part element="typens:GetPayment" name="body"/>
+  </message>
+  <message name="GetListRequest">
+    <part element="typens:GetList" name="body"/>
+  </message>
+  <message name="RequestResponse">
+    <part element="typens:RequestResponse" name="body"/>
+  </message>
+  <message name="UnblockResponse">
+    <part element="typens:UnblockResponse" name="body"/>
+  </message>
+  <message name="ReturnRequest">
+    <part element="typens:Return" name="body"/>
+  </message>
+  <portType name="PaymentServerPort">
+    <operation name="Request">
+      <input message="typens:Request"/>
+      <output message="typens:RequestResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="AutoPayment">
+      <input message="typens:AutoPayment"/>
+      <output message="typens:AutoPaymentResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="Payment">
+      <input message="typens:Payment"/>
+      <output message="typens:PaymentResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="CancelRequest">
+      <input message="typens:CancelRequest"/>
+      <output message="typens:CancelRequestResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="ReturnPayment">
+      <input message="typens:ReturnPayment"/>
+      <output message="typens:ReturnPaymentResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="GetPayment">
+      <input message="typens:GetPaymentIn"/>
+      <output message="typens:GetPaymentOut"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+  </portType>
+  <portType name="ServiceProviderPort">
+    <operation name="GetClientID">
+      <input message="typens:GetClientIDRequest"/>
+      <output message="typens:GetClientIDResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="GetList">
+      <input message="typens:GetListRequest"/>
+      <output message="typens:GetListResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="Get">
+      <input message="typens:GetRequest"/>
+      <output message="typens:GetResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="Block">
+      <input message="typens:BlockRequest"/>
+      <output message="typens:BlockResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="Unblock">
+      <input message="typens:UnblockRequest"/>
+      <output message="typens:UnblockResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="Return">
+      <input message="typens:ReturnRequest"/>
+      <output message="typens:ReturnResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+    <operation name="WriteOff">
+      <input message="typens:WriteOffRequest"/>
+      <output message="typens:WriteOffResponse"/>
+      <fault message="typens:PaymentServerFault" name="PaymentServerException"/>
+    </operation>
+  </portType>
+  <binding name="PaymentServerBinding" type="typens:PaymentServerPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="Request">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="AutoPayment">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Payment">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="CancelRequest">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="ReturnPayment">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="GetPayment">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <binding name="ServiceProviderBinding" type="typens:ServiceProviderPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="GetClientID">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="GetList">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Get">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Block">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Unblock">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="Return">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="WriteOff">
+      <soap:operation soapAction="urn:PaymentServer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="PaymentServerException">
+        <soap:fault name="PaymentServerException" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="PaymentServerService">
+    <port binding="typens:PaymentServerBinding" name="PaymentServerPort">
+      <soap:address location="http://localhost:8080/TestService/PaymentServerService"/>
+    </port>
+  </service>
+  <service name="ServiceProviderService">
+    <port binding="typens:ServiceProviderBinding" name="ServiceProviderPort">
+      <soap:address location="http://localhost:8080/TestService/ServiceProviderService"/>
+    </port>
+  </service>
+</definitions>

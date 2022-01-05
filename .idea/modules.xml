@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/LinkApp.iml" filepath="$PROJECT_DIR$/.idea/LinkApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-cards/bankCards.iml" filepath="$PROJECT_DIR$/bank-cards/bankCards.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-cards-commons/bankCardsCommons.iml" filepath="$PROJECT_DIR$/bank-cards-commons/bankCardsCommons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-cards-core/bankCardsCore-lv.iml" filepath="$PROJECT_DIR$/bank-cards-core/bankCardsCore-lv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-cards-ear/bankCardsEAR.iml" filepath="$PROJECT_DIR$/bank-cards-ear/bankCardsEAR.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-cards-link/bankCardsLink-lt.iml" filepath="$PROJECT_DIR$/bank-cards-link/bankCardsLink-lt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-cards-pos-iso-auth/bankCardsPosISOAuth.iml" filepath="$PROJECT_DIR$/bank-cards-pos-iso-auth/bankCardsPosISOAuth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-cards-rest/bankCardsRest.iml" filepath="$PROJECT_DIR$/bank-cards-rest/bankCardsRest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-cards-soap/bankCardsSoap.iml" filepath="$PROJECT_DIR$/bank-cards-soap/bankCardsSoap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/db-synchronizer/dbSync.iml" filepath="$PROJECT_DIR$/db-synchronizer/dbSync.iml" />
+    </modules>
+  </component>
+</project>

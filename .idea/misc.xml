@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="javaeeApplication" url="file://$PROJECT_DIR$/bank-cards-ear" />
+    <file type="web" url="file://$PROJECT_DIR$/bank-cards-rest" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/ays-commons/pom.xml" />
+        <option value="$PROJECT_DIR$/bank-cards-ear/pom.xml" />
+        <option value="$PROJECT_DIR$/bank-cards-link/pom.xml" />
+        <option value="$PROJECT_DIR$/bank-cards-core/pom.xml" />
+        <option value="$PROJECT_DIR$/bank-cards-rest/pom.xml" />
+        <option value="$PROJECT_DIR$/bank-cards-commons/pom.xml" />
+        <option value="$PROJECT_DIR$/bank-cards/pom.xml" />
+        <option value="$PROJECT_DIR$/bank-cards-pos-iso-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/db-synchronizer/pom.xml" />
+        <option value="$PROJECT_DIR$/bank-cards-soap/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>

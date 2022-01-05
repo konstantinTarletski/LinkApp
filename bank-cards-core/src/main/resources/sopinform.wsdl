@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:Processes_BASE/processes/linkapp/sopinformation/LAPP_SOPInformationPrcWS" xmlns:dlsopilv="http://dnb.lv/dnb-xst/dnb-linkapp-SOPInformation-LV" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:Processes_BASE/processes/linkapp/sopinformation/LAPP_SOPInformationPrcWS" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:types>
+        <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://dnb.lv/dnb-xst/dnb-linkapp-SOPInformation-LV" xmlns="http://dnb.lv/dnb-xst/dnb-linkapp-SOPInformation-LV" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <xsd:annotation>
+                <xsd:documentation>LV shema for SOPInformation  </xsd:documentation>
+                <xsd:appinfo>
+                    <RevisionHistory>
+                        <Revision>
+                            <Date>2015-10-19</Date>
+                            <Version>1.0</Version>
+                            <Description>LV shema for SOPInformation </Description>
+                            <Author>DNB LV, Deniss Viskovs</Author>
+                        </Revision>
+                    </RevisionHistory>
+                </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:complexType name="SOPInformationQueryHeader_LV_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOPInformationQueryHeader_Core_t">
+                        <xsd:sequence>
+                            <xsd:element fixed="SOPInformation" minOccurs="0" name="QueryName" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="SystemName" type="SystemNameLV_t"/>
+                            <xsd:element maxOccurs="0" minOccurs="0" name="QueryCriteria" type="QueryCriteria_t"/>
+                            <xsd:element minOccurs="0" name="XMLVersion" type="XMLVersion_t"/>
+                            <xsd:element minOccurs="0" name="Language" type="CountryCode_t"/>
+                            <xsd:element minOccurs="0" name="Extension" type="GenericExtension_t"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="SOPInformationQueryBody_LV_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOPInformationQueryBody_Core_t">
+                        <xsd:sequence>
+                            <xsd:element name="Criteria" type="ClientIDUniqueClientIDQueryCriteria_t"/>
+                            <xsd:element minOccurs="0" name="SOPStatusList" type="SOPStatusList_t"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="SOPInformationQueryExtension_LV_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOPInformationQueryExtension_Core_t">
+                        <xsd:sequence>
+                            <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="SOPInformationResultHeader_LV_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOPInformationResultHeader_Core_t">
+                        <xsd:sequence>
+                            <xsd:element name="Code" type="xsd:integer">
+                                <xsd:annotation>
+                                    <xsd:documentation>Codes:
+
+                                    </xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="CodeInfo" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="Language" type="CountryCode_t"/>
+                            <xsd:element fixed="SOPInformation" minOccurs="0" name="QueryName" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="SystemName" type="SystemNameLV_t"/>
+                            <xsd:element fixed="1.0" minOccurs="0" name="XMLVersion" type="XMLVersion_t"/>
+                            <xsd:element minOccurs="0" name="Extension" type="GenericExtension_t"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="SOPInformationResultBody_LV_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOPInformationResultBody_Core_t">
+                        <xsd:sequence>
+                            <xsd:element name="UniqueClientID" type="xsd:string"/>
+                            <xsd:element name="SOPList" type="SOPList_t"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="SOPInformationExtension_LV_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOPInformationExtension_Core_t"/>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="Query" type="Query_t"/>
+            <xsd:element name="Result" type="Result_t"/>
+            <xsd:complexType name="SystemNameLV_t">
+                <xsd:annotation>
+                    <xsd:documentation>Fixing country to LV</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="SystemName_t">
+                        <xsd:attribute fixed="LV" name="Country" type="TodoCountryList_t" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="QueryCriteria_t">
+                <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                        <xsd:attribute name="type" type="xsd:string" use="required"/>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:simpleType name="XMLVersion_t">
+                <xsd:annotation>
+                    <xsd:documentation>Type used for XML versioning</xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="5"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="CountryCode_t">
+                <xsd:annotation>
+                    <xsd:documentation>Country ISO 3166-1-alpha-2 code</xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="2"/>
+                    <xsd:pattern value="([A-Z])*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType final="#all" name="GenericExtension_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        A common type for extensions that do not have any additional fields.
+                        Please, note that this type can only be used in the implementation files.
+                        For abstract structures Extension_t can be used.
+                        For other cases a specific type derived from Extension_t should be used.
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexContent>
+                    <xsd:restriction base="Extension_t">
+                        <xsd:sequence>
+                            <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="ClientIDUniqueClientIDQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        ClientID (personal code or reg. number) or Unique Client ID(Unique client identifier.)
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:attribute name="type" use="required">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="ClientID"/>
+                                    <xsd:enumeration value="UniqueClientID"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="SOPStatusList_t">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="SOPStatus" type="StringWithTextCode_t"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="SOPList_t">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" name="SOP" type="SOP_t"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="SOPInformationQueryHeader_Core_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="QueryHeader_t">
+                        <xsd:sequence>
+                            <xsd:element fixed="SOPInformation" minOccurs="0" name="QueryName" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="SystemName" type="SystemName_t"/>
+                            <xsd:element minOccurs="0" name="QueryCriteria" type="QueryCriteria_t"/>
+                            <xsd:element minOccurs="0" name="XMLVersion" type="XMLVersion_t"/>
+                            <xsd:element minOccurs="0" name="Language" type="CountryCode_t"/>
+                            <xsd:element minOccurs="0" name="Extension" type="Extension_t"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="SOPInformationQueryBody_Core_t">
+                <xsd:complexContent>
+                    <xsd:extension base="QueryBody_t">
+                        <xsd:sequence>
+                            <xsd:element name="Criteria" type="ClientIDUniqueClientIDQueryCriteria_t"/>
+                            <xsd:element minOccurs="0" name="SOPStatusList" type="SOPStatusList_t"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="SOPInformationQueryExtension_Core_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="Extension_t">
+                        <xsd:sequence>
+                            <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="SOPInformationResultHeader_Core_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="ResultHeader_t">
+                        <xsd:sequence>
+                            <xsd:element name="Code" type="xsd:integer">
+                                <xsd:annotation>
+                                    <xsd:documentation>Codes:
+
+                                    </xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="CodeInfo" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="Language" type="CountryCode_t"/>
+                            <xsd:element fixed="SOPInformation" minOccurs="0" name="QueryName" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="SystemName" type="SystemName_t"/>
+                            <xsd:element fixed="1.0" minOccurs="0" name="XMLVersion" type="XMLVersion_t"/>
+                            <xsd:element minOccurs="0" name="Extension" type="Extension_t"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="SOPInformationResultBody_Core_t">
+                <xsd:complexContent>
+                    <xsd:extension base="ResultBody_t">
+                        <xsd:sequence>
+                            <xsd:element name="UniqueClientID" type="xsd:string"/>
+                            <xsd:element name="SOPList" type="SOPList_t"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="SOPInformationExtension_Core_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="Extension_t"/>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="Query_t">
+                <xsd:sequence>
+                    <xsd:element name="QueryHeader" type="SOPInformationQueryHeader_LV_t">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                This element describes Query header information,
+                                like query type
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="QueryBody" type="SOPInformationQueryBody_LV_t">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                This element describes Query body information.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Extension" type="SOPInformationQueryExtension_LV_t">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                This element is provided for future extensions to comply with specific needs of a system.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Result_t">
+                <xsd:sequence>
+                    <xsd:element name="ResultHeader" type="SOPInformationResultHeader_LV_t"/>
+                    <xsd:element minOccurs="0" name="ResultBody" type="SOPInformationResultBody_LV_t"/>
+                    <xsd:element name="Extension" type="SOPInformationQueryExtension_LV_t">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                This element is provided for future extensions to comply with specific needs of a system.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="SystemName_t">
+                <xsd:annotation>
+                    <xsd:documentation>Each system belongs to some country</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:extension base="SystemTextName_t">
+                        <xsd:attribute name="Country" type="TodoCountryList_t" use="optional"/>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:simpleType name="TodoCountryList_t">
+                <xsd:annotation>
+                    <xsd:documentation>DnB NORD group country list
+
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="CountryCode_t">
+                    <xsd:length value="2"/>
+                    <xsd:enumeration value="LV"/>
+                    <xsd:enumeration value="PL"/>
+                    <xsd:enumeration value="LT"/>
+                    <xsd:enumeration value="DK"/>
+                    <xsd:enumeration value="FI"/>
+                    <xsd:enumeration value="EE"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="ClientIDClientCIFQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        ClientID (personal code or reg. number) or ClientCIF (Platon CIF code)
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:attribute name="type" use="required">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="ClientID"/>
+                                    <xsd:enumeration value="ClientCIF"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="UniqueClientIDQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        FrontEnd unique client identifier.
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:attribute fixed="UniqueClientID" name="type" type="xsd:string" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="DateTimeQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Type used for queries that depend on date and time.
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:pattern value="-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?">
+                            <xsd:annotation>
+                                <xsd:documentation>This is regular expression got from W3C for type xsd:dateTime</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:pattern>
+                        <xsd:attribute fixed="DateTime" name="type" type="xsd:string" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="CardNumberQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Type used for cards queries.
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:maxLength value="19"/>
+                        <xsd:pattern value="[0-9]*"/>
+                        <xsd:attribute fixed="CardNumber" name="type" type="xsd:string" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="CardNumberOrCADApplicationIDQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>Query criteria that allows to use either CardNumber or CADApplicationID.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:maxLength value="20"/>
+                        <xsd:attribute name="type" use="required">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="CardNumber"/>
+                                    <xsd:enumeration value="CADApplicationID"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="CIFCodeQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>Query criteria by Latvian CIF code</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:length value="6"/>
+                        <xsd:pattern value="[A-Z][0-9]{5}"/>
+                        <xsd:attribute fixed="CIFCode" name="type" type="xsd:string" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="QueryCriteriaOS_t">
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:attribute fixed="OS" name="type" type="xsd:string" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="CIFOrUniqueClientIDQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>Query criteria by Latvian CIF code or Unique client's ID</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:attribute name="type" use="required">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="CIFCode"/>
+                                    <xsd:enumeration value="UniqueClientID"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="UniqueOrLegalClientIDQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>Query criteria that allows to use either a unique client ID or client's Legal ID.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:attribute name="type" use="required">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="UniqueClientID"/>
+                                    <xsd:enumeration value="ClientLegalID"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="FlexAccountNumberQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Flexcube internal account number
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:maxLength value="20"/>
+                        <xsd:pattern value="[0-9]*"/>
+                        <xsd:attribute fixed="FlexAccountNumber" name="type" type="xsd:string" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="DepositNumberOrAccountQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Query by unique id of a deposit or by account number of the deposit
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:maxLength value="16"/>
+                        <xsd:attribute name="type" use="required">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="DepositNumberOrAccountNumber"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="BankCodeQueryCriteria_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Type used for BIC queries.
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="QueryCriteria_t">
+                        <xsd:pattern value="[0-9]{5}"/>
+                        <xsd:attribute fixed="BankCode" name="type" type="xsd:string" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:simpleType name="LangCode_t">
+                <xsd:restriction base="CountryCode_t">
+                    <xsd:length value="2"/>
+                    <xsd:enumeration value="LV"/>
+                    <xsd:enumeration value="EN"/>
+                    <xsd:enumeration value="RU"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="CountryCodeEnum_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        This type contains most common ISO 3166-1-alpha-2 country codes.
+                        Currently only European codes are present. Additional codes can be added if neccessary.
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="CountryCode_t">
+                    <xsd:enumeration value="AL">
+                        <xsd:annotation>
+                            <xsd:documentation>ALBANIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="AD">
+                        <xsd:annotation>
+                            <xsd:documentation>ANDORRA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="AT">
+                        <xsd:annotation>
+                            <xsd:documentation>AUSTRIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="BY">
+                        <xsd:annotation>
+                            <xsd:documentation>BELARUS </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="BE">
+                        <xsd:annotation>
+                            <xsd:documentation>BELGIUM </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="BA">
+                        <xsd:annotation>
+                            <xsd:documentation>BOSNIA AND HERZEGOVINA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="BG">
+                        <xsd:annotation>
+                            <xsd:documentation>BULGARIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="HR">
+                        <xsd:annotation>
+                            <xsd:documentation>CROATIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="CZ">
+                        <xsd:annotation>
+                            <xsd:documentation>CZECH REPUBLIC </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="DK">
+                        <xsd:annotation>
+                            <xsd:documentation>DENMARK </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="EE">
+                        <xsd:annotation>
+                            <xsd:documentation>ESTONIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="FO">
+                        <xsd:annotation>
+                            <xsd:documentation>FAROE ISLANDS </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="FI">
+                        <xsd:annotation>
+                            <xsd:documentation>FINLAND </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="FR">
+                        <xsd:annotation>
+                            <xsd:documentation>FRANCE </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="DE">
+                        <xsd:annotation>
+                            <xsd:documentation>GERMANY </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="GI">
+                        <xsd:annotation>
+                            <xsd:documentation>GIBRALTAR </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="GR">
+                        <xsd:annotation>
+                            <xsd:documentation>GREECE </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="HU">
+                        <xsd:annotation>
+                            <xsd:documentation>HUNGARY </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="IS">
+                        <xsd:annotation>
+                            <xsd:documentation>ICELAND </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="IE">
+                        <xsd:annotation>
+                            <xsd:documentation>IRELAND </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="IM">
+                        <xsd:annotation>
+                            <xsd:documentation>ISLE OF MAN </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="IT">
+                        <xsd:annotation>
+                            <xsd:documentation>ITALY </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="LV">
+                        <xsd:annotation>
+                            <xsd:documentation>LATVIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="LI">
+                        <xsd:annotation>
+                            <xsd:documentation>LIECHTENSTEIN </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="LT">
+                        <xsd:annotation>
+                            <xsd:documentation>LITHUANIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="LU">
+                        <xsd:annotation>
+                            <xsd:documentation>LUXEMBOURG </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="MK">
+                        <xsd:annotation>
+                            <xsd:documentation>MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="MT">
+                        <xsd:annotation>
+                            <xsd:documentation>MALTA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="MD">
+                        <xsd:annotation>
+                            <xsd:documentation>MOLDOVA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="MC">
+                        <xsd:annotation>
+                            <xsd:documentation>MONACO </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="NL">
+                        <xsd:annotation>
+                            <xsd:documentation>NETHERLANDS </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="NO">
+                        <xsd:annotation>
+                            <xsd:documentation>NORWAY </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="PL">
+                        <xsd:annotation>
+                            <xsd:documentation>POLAND </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="PT">
+                        <xsd:annotation>
+                            <xsd:documentation>PORTUGAL </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="RO">
+                        <xsd:annotation>
+                            <xsd:documentation>ROMANIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="RU">
+                        <xsd:annotation>
+                            <xsd:documentation>RUSSIAN FEDERATION </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="SM">
+                        <xsd:annotation>
+                            <xsd:documentation>SAN MARINO </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="RS">
+                        <xsd:annotation>
+                            <xsd:documentation>SERBIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="SK">
+                        <xsd:annotation>
+                            <xsd:documentation>SLOVAKIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="SI">
+                        <xsd:annotation>
+                            <xsd:documentation>SLOVENIA </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="ES">
+                        <xsd:annotation>
+                            <xsd:documentation>SPAIN </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="SE">
+                        <xsd:annotation>
+                            <xsd:documentation>SWEDEN </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="CH">
+                        <xsd:annotation>
+                            <xsd:documentation>SWITZERLAND </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="TR">
+                        <xsd:annotation>
+                            <xsd:documentation>TURKEY </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="UA">
+                        <xsd:annotation>
+                            <xsd:documentation>UKRAINE </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="GB">
+                        <xsd:annotation>
+                            <xsd:documentation>UNITED KINGDOM </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="VA">
+                        <xsd:annotation>
+                            <xsd:documentation>VATICAN CITY STATE </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType abstract="true" name="Extension_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        This type should validate any content and is provided so that it can be later restricted to use in
+                        specific interfaces without xsd modification for all interfaces.
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="StringWithTextCode_t">
+                <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                        <xsd:attribute name="code" type="xsd:string" use="required"/>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:complexType name="SOP_t">
+                <xsd:sequence>
+                    <xsd:element name="SOPStatus" type="StringWithTextCode_t"/>
+                    <xsd:element name="Product" type="StringWithTextCode_t"/>
+                    <xsd:element minOccurs="0" name="IBPictureURL" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="IBGeneralTermsAndConditions" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="IBProductTermsAndConditions" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="EmailOfProductResponsible" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="QueryHeader_t">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="MessageID" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Is used in OSECM files.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="QueryName" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Each query type have it's own unique query name
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="SystemName" type="SystemName_t">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Each system have unique name
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="QueryCriteria" type="QueryCriteria_t">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Query criteria is needed to identify necessary
+                                information.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="XMLVersion" type="XMLVersion_t">
+                        <xsd:annotation>
+                            <xsd:documentation>This tag is used for XML versioning</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Language" type="CountryCode_t">
+                        <xsd:annotation>
+                            <xsd:documentation>Is used to identify language of the interface, can be used for CodeInfo translation in the ResultHeader (can also be used for other purposes)</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Extension" type="Extension_t">
+                        <xsd:annotation>
+                            <xsd:documentation>This element is provided for future extensions to comply with specific needs of a system</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="QueryBody_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Empty template type. Should be overriden for each particular request message type.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="ResultHeader_t">
+                <xsd:sequence>
+                    <xsd:element name="Code" type="xsd:integer">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Error code 0 means, that operation was performed
+                                successfully Error codes from 1 to 999 reserved
+                                for errors Error codes from 1000 - maxInt
+                                reserved for warnings
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="CodeInfo" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                CodeInfo element is used for exception text (if
+                                the error persists)
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Language" type="CountryCode_t">
+                        <xsd:annotation>
+                            <xsd:documentation>Is used to identify language of the interface, can be used for CodeInfo translation in the ResultHeader (can also be used for other purposes)</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="MessageID" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Is used in OSECM files.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="QueryName" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Each query type have it's own unique query name
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="SystemName" type="SystemName_t">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Each system have unique name
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="XMLVersion" type="XMLVersion_t">
+                        <xsd:annotation>
+                            <xsd:documentation>This tag is used for XML versioning</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Extension" type="Extension_t">
+                        <xsd:annotation>
+                            <xsd:documentation>This element is provided for future extensions to comply with specific needs of a system</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType abstract="true" name="ResultBody_t">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Empty template type. Should be overriden for each particular response message type.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:complexType>
+            <xsd:complexType name="SystemNameLT_t">
+                <xsd:annotation>
+                    <xsd:documentation>Fixing country to LT</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="SystemName_t">
+                        <xsd:attribute fixed="LT" name="Country" type="TodoCountryList_t" use="required"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:simpleType name="SystemTextName_t">
+                <xsd:annotation>
+                    <xsd:documentation>Type for system names</xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="1"/>
+                    <xsd:maxLength value="15"/>
+                    <xsd:pattern value="([A-Z|0-9])*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="LT-AccountShortInfoExtension_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="Extension_t">
+                        <xsd:sequence>
+                            <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="LT-CardShortInfoExtension_t">
+                <xsd:complexContent>
+                    <xsd:restriction base="Extension_t">
+                        <xsd:sequence>
+                            <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+                        </xsd:sequence>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Request">
+        <wsdl:part name="DefaultInput" element="dlsopilv:Query">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="Response">
+        <wsdl:part name="DefaultOutput" element="dlsopilv:Result">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="LAPP_SOPInformationPrcWSPortType">
+        <wsdl:operation name="LAPP_SOPInformationPrcWS">
+            <wsdl:input message="tns:Request">
+            </wsdl:input>
+            <wsdl:output message="tns:Response">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="LAPP_SOPInformationPrcWSSOAPBinding" type="tns:LAPP_SOPInformationPrcWSPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="LAPP_SOPInformationPrcWS">
+            <soap:operation soapAction="urn:Processes_BASE/processes/linkapp/sopinformation/LAPP_SOPInformationPrcWS:LAPP_SOPInformationPrcWSPortType:LAPP_SOPInformationPrcWSRequest"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="LAPP_SOPInformationPrcWSService">
+        <wsdl:port name="LAPP_SOPInformationPrcWSPort" binding="tns:LAPP_SOPInformationPrcWSSOAPBinding">
+            <soap:address location="http://T1LV-SONIC1.dnb.lv:2586/services/lapp/sopinform"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

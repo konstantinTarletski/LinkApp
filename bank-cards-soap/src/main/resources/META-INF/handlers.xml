@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<handler-chains xmlns="http://java.sun.com/xml/ns/javaee" 
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss_webservices_1_0.xsd">
+  <handler-chain>
+    <handler>
+      <handler-name>IPAddressHandler</handler-name>
+      <handler-class>lv.bank.cards.base.utils.IPAddressHandler</handler-class>
+    </handler>
+    <handler>
+      <handler-name>LogXmlHandler</handler-name>
+      <handler-class>lv.bank.cards.core.utils.LogXmlHandler</handler-class>
+    </handler>
+  </handler-chain>
+</handler-chains>

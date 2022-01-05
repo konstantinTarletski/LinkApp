@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/bank-cards-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-link/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-link/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-pos-iso-auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-pos-iso-auth/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-rest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-rest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-soap/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards-soap/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards/src/main/java/lv/nordlb/cards/transmaster/requests/handlers/pcdabaNG/RetrievePinCodes.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-cards/src/test/java/lv/nordlb/cards/transmaster/requests/handlers/pcdabaNG/CardInfoTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/db-synchronizer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/db-synchronizer/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

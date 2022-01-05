@@ -1,0 +1,8 @@
+/.settings
+/bin/
+
+/dist
+/.project
+/.classpath
+/target/
+/*.iml

@@ -1,0 +1,98 @@
+<h1>{{#info}}{{title}}</h1>
+
+<h2>{{join schemes " | "}}://{{host}}{{basePath}}</h2>
+
+<p>{{description}}</p>
+
+{{#contact}}
+<p><a href="mailto:{{email}}">Contact the developer</a></p>
+{{/contact}}
+
+<p><strong>Version</strong> {{version}}</p>
+
+<p><strong>Terms of Service</strong> {{termsOfService}}</p>
+
+{{#license}}
+<p><a href="{{url}}">{{name}}</a></p>
+{{/license}}
+
+{{/info}}
+
+{{#if consumes}}<strong>Consumes:</strong> {{join consumes ", "}}{{/if}}
+
+{{#if produces}}<strong>Produces:</strong> {{join produces ", "}}{{/if}}
+
+{{#if securityDefinitions}}
+<h1>Security Definitions</h1>
+{{/if}}
+{{> security}}
+
+<h1>APIs</h1>
+
+{{#each paths}}
+<h2>{{@key}}</h2>
+{{#this}}
+{{#get}}
+<h3>GET</h3>
+{{> operation}}
+{{/get}}
+
+{{#put}}
+<h3>PUT</h3>
+{{> operation}}
+{{/put}}
+
+{{#post}}
+<h3>POST</h3>
+
+{{> operation}}
+
+{{/post}}
+
+{{#delete}}
+<h3>DELETE</h3>
+{{> operation}}
+{{/delete}}
+
+{{#option}}
+<h3>OPTION</h3>
+{{> operation}}
+{{/option}}
+
+{{#patch}}
+<h3>PATCH</h3>
+{{> operation}}
+{{/patch}}
+
+{{#head}}
+<h3>HEAD</h3>
+{{> operation}}
+{{/head}}
+
+{{/this}}
+{{/each}}
+
+<h1>Definitions</h1>
+{{#each definitions}}
+<h2><a id="/definitions/{{key}}">{{@key}}</a></h2>
+
+<table border="1">
+    <tbody>
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>{{#each this.properties}}
+        <tr>
+            <td>{{@key}}</td>
+            <td>{{#ifeq type "array"}} {{#items.$ref}} {{type}}[<a href="{{items.$ref}}">{{basename items.$ref}}</a>] {{/items.$ref}} {{^items.$ref}}{{type}}[{{items.type}}]{{/items.$ref}} {{else}}{{#$ref}}<a href="{{$ref}}">{{basename $ref}}</a>{{/$ref}} {{^$ref}}{{type}}{{#format}} ({{format}}){{/format}}{{/$ref}} {{/ifeq}}</td>
+            <td>{{#required}}required{{/required}}{{^required}}optional{{/required}}</td>
+            <td>{{#description}}{{{description}}}{{/description}}{{^description}}-{{/description}}</td>
+            <td>{{example}}</td>
+        </tr>{{/each}}
+    </tbody>
+</table>
+{{/each}}
+
